@@ -2,11 +2,8 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.140.1/containers/javascript-node
 {
 	"name": "fakedata",
-	"build": {
-		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick a Node version: 10, 12, 14
-		"args": { "VARIANT": "14" }
-	},
+	"service": "fakedata",
+	"dockerComposeFile": "./docker-compose.yml",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
@@ -19,10 +16,12 @@
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000],
+	"forwardPorts": [3000, 9000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+	"postreateCommand": "npm install",
+	"workspaceFolder": "/workspace",
+	"shutdownAction": "none"
 
 	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
 	// "remoteUser": "node"
