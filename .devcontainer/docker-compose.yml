@@ -1,0 +1,27 @@
+version: '3'
+services: 
+    fakedata:
+        build: 
+            context: ..
+            dockerfile: .devcontainer/Dockerfile
+        depends_on:
+            - mongo
+        volumes:
+            - ..:/workspace
+        command: /bin/sh -c "while sleep 1000; do :; done" 
+    mongo:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+    mongoexpress:
+        image: mongo-express
+        restart: always
+        depends_on:
+            - mongo
+        ports: 
+            - 9000:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: root
