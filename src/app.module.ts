@@ -9,7 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     RouterModule.forRoutes(routes),
     V1Module,
     MongooseModule.forRoot(
-      'mongodb://root:root@database:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false',
+      'mongodb://root:root@mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false',
     ),
   ],
 })
