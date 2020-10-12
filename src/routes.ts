@@ -1,6 +1,6 @@
 import { Routes } from 'nest-router';
 import { PostsModule } from './v1/controllers/posts/posts.module';
-import { UsersModule } from './v1/controllers/users/users.module';
+import { UserModule } from './v1/controllers/users/user.module';
 import { V1Module } from './v1/v1.module';
 
 export const routes: Routes = [
@@ -10,7 +10,7 @@ export const routes: Routes = [
     children: [
       {
         path: '/users',
-        module: UsersModule,
+        module: UserModule,
       },
       {
         path: '/posts',
