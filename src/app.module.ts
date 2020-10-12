@@ -11,12 +11,13 @@ import { join } from 'path';
     V1Module,
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: 'mongodb://root:root@mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false',
+      url:
+        'mongodb://root:root@mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false',
       entities: [join(__dirname, '**/**.entity{.js,.ts}')],
       synchronize: true,
       useNewUrlParser: true,
-      logging: true
-    })
+      logging: true,
+    }),
   ],
 })
-export class AppModule { }
+export class AppModule {}
