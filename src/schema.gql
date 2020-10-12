@@ -1,0 +1,27 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  users: [User!]!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type User {
+  _id: ID!
+  age: Float!
+  birthdate: Timestamp!
+  firstname: String!
+  gender: UserGender!
+  lastname: String!
+}
+
+enum UserGender {
+  FEMALE
+  MALE
+  OTHER
+}
