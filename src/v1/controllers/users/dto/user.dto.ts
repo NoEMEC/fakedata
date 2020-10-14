@@ -7,7 +7,7 @@ export class UserDTO {
   @Field()
   @IsNotEmpty()
   firstname: string;
-  
+
   @Field()
   @IsNotEmpty()
   lastname: string;
@@ -20,7 +20,7 @@ export class UserDTO {
   @IsNotEmpty()
   @IsDateString()
   birthdate: string;
-  
+
   @Field()
   @IsNotEmpty()
   @IsIn([UserGender.FEMALE, UserGender.MALE, UserGender.OTHER])
