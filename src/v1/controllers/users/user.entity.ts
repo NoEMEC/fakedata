@@ -28,7 +28,7 @@ export class User extends BaseEntity {
 
   @Field()
   @Column()
-  birthdate: Date;
+  birthdate: string;
 
   @Field(() => UserGender)
   @Column('enum', { enum: UserGender, default: UserGender.OTHER })

@@ -2,21 +2,28 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  createUser(createUserInput: UserDTO!): User!
+}
+
 type Query {
   users: [User!]!
 }
 
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
-
 type User {
   _id: ID!
   age: Float!
-  birthdate: Timestamp!
+  birthdate: String!
   firstname: String!
   gender: UserGender!
+  lastname: String!
+}
+
+input UserDTO {
+  age: Float!
+  birthdate: String!
+  firstname: String!
+  gender: String!
   lastname: String!
 }
 
