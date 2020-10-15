@@ -3,6 +3,6 @@ import { UserModule } from './controllers/users/user.module';
 import { PostsModule } from './controllers/posts/post.module';
 
 @Module({
-  imports: [UserModule, PostsModule],
+    imports: [UserModule, PostsModule],
 })
 export class V1Module {}
