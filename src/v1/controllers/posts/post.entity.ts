@@ -1,9 +1,9 @@
-import { BaseEntity, Column, Entity, ObjectIdColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
 
 @Entity()
 export class PostEntity extends BaseEntity {
     @ObjectIdColumn()
-    _id: string;
+    _id: ObjectID;
 
     @Column()
     title: string;
