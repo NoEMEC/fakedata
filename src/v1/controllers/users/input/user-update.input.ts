@@ -1,6 +1,10 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 import { IsIn } from 'class-validator';
 import { UserGender } from '../user-gender';
+
+registerEnumType(UserGender, {
+    name: 'UserGender',
+});
 
 @InputType()
 export class UpdateUserInput {
@@ -24,9 +28,9 @@ export class UpdateUserInput {
     })
     birthdate: string;
 
-    @Field({
+    @Field(() => UserGender, {
         nullable: true,
     })
     @IsIn([UserGender.FEMALE, UserGender.MALE, UserGender.OTHER])
-    gender: string;
+    gender: UserGender;
 }

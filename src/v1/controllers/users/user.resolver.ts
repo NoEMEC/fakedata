@@ -8,24 +8,24 @@ import { UpdateUserInput } from './input/user-update.input';
 export class UserResolver {
     constructor(private userService: UserService) {}
 
-    @Query(() => [User])
+    @Query(() => [User], { description: 'Get all users' })
     async users(): Promise<User[]> {
         return this.userService.getUsers();
     }
 
-    @Query(() => User)
-    async getUser(@Args('id') id: string): Promise<User> {
+    @Query(() => User, { description: 'Get a unique user per id' })
+    async user(@Args('id') id: string): Promise<User> {
         return this.userService.getUser(id);
     }
 
-    @Mutation(() => User)
+    @Mutation(() => User, { description: 'Create a new user' })
     async createUser(
         @Args('createUserInput') createUserInput: UserDTO,
     ): Promise<User> {
         return this.userService.createUser(createUserInput);
     }
 
-    @Mutation(() => User)
+    @Mutation(() => User, { description: 'Update a user' })
     async updateUser(
         @Args('id') id: string,
         @Args('updateUserInput') updateUserInput: UpdateUserInput,
@@ -33,8 +33,8 @@ export class UserResolver {
         return this.userService.updateUser(id, updateUserInput);
     }
 
-    @Mutation(() => User)
-    async deleteUser(@Args('id') id: string): Promise<User> {
-        return this.userService.getUser(id);
+    @Mutation(() => String, { description: 'Delete a user' })
+    async deleteUser(@Args('id') id: string): Promise<string> {
+        return this.userService.deleteUser(id);
     }
 }
