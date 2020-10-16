@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import * as config from 'config';
+import config from 'config';
 
 const dbConfig = config.get('db');
 
@@ -10,5 +10,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     entities: [__dirname + '/../**/**.entity{.js,.ts}'],
     useNewUrlParser: true,
     logging: true,
+    useUnifiedTopology: true,
     synchronize: dbConfig.synchronize,
 };
