@@ -3,13 +3,21 @@
 # ------------------------------------------------------
 
 type Mutation {
+  """Create a new user"""
   createUser(createUserInput: UserDTO!): User!
-  deleteUser(id: String!): User!
+
+  """Delete a user"""
+  deleteUser(id: String!): String!
+
+  """Update a user"""
   updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
-  getUser(id: String!): User!
+  """Get a unique user per id"""
+  user(id: String!): User!
+
+  """Get all users"""
   users: [User!]!
 }
 
@@ -17,7 +25,7 @@ input UpdateUserInput {
   age: Float
   birthdate: String
   firstname: String
-  gender: String
+  gender: UserGender
   lastname: String
 }
 
