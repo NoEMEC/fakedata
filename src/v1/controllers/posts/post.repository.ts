@@ -7,13 +7,11 @@ import { InternalServerErrorException } from '@nestjs/common';
 @EntityRepository(PostEntity)
 export class PostRepository extends Repository<PostEntity> {
     async createPost(post: PostDTO): Promise<PostEntity> {
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        const { title, body, user_id } = post;
+        const { title, body, userId } = post;
         const postEntity = new PostEntity();
         postEntity.title = title;
         postEntity.body = body;
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        postEntity.user_id = user_id;
+        postEntity.userId = userId;
         postEntity._id = new ObjectId().toHexString();
         try {
             return postEntity;

@@ -12,5 +12,5 @@ export class PostEntity extends BaseEntity {
     body: string;
 
     @Column()
-    user_id: string;
+    userId: string;
 }

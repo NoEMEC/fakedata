@@ -8,5 +8,5 @@ export class PostDTO {
     body: string;
 
     @IsNotEmpty()
-    user_id: string;
+    userId: string;
 }
