@@ -1,0 +1,7 @@
+server:
+  port: 3000
+
+db:
+  type: 'mongodb'
+  useNewUrlParser: true
+  logging: true

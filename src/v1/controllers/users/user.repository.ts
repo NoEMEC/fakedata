@@ -24,5 +24,5 @@ export class UserRepository extends Repository<User> {
     } catch (error) {
       this.logger.error('Database Error: ', error.stack);
     }
-  }
+}
 }

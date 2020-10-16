@@ -5,20 +5,13 @@ import { V1Module } from './v1/v1.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
+import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
   imports: [
     RouterModule.forRoutes(routes),
     V1Module,
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url:
-        'mongodb://root:root@mongo:27017/fakedata_db?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false',
-      entities: [join(__dirname, '**/**.entity{.js,.ts}')],
-      synchronize: true,
-      useNewUrlParser: true,
-      logging: true,
-    }),
+    TypeOrmModule.forRoot(typeOrmConfig),
     GraphQLModule.forRoot({
       // Caracteristica para trabajar con "Code first"
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -27,6 +20,5 @@ import { GraphQLModule } from '@nestjs/graphql';
         dateScalarMode: 'timestamp',
       },
     }),
-  ],
-})
+  ]})
 export class AppModule {}
