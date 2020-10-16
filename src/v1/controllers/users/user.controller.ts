@@ -5,6 +5,7 @@ import {
     Body,
     Param,
     ValidationPipe,
+    Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDTO } from 'src/v1/controllers/users/dto/user.dto';
@@ -27,5 +28,10 @@ export class UserController {
     @Post()
     createUser(@Body(ValidationPipe) user: UserDTO): Promise<User> {
         return this.userService.createUser(user);
+    }
+
+    @Patch(':id')
+    updateUser(@Param('id') id: string, @Body('user') user: Partial<UserDTO>) {
+        return this.userService.updateUser(id, user);
     }
 }

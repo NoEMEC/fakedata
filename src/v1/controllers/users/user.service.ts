@@ -23,7 +23,7 @@ export class UserService {
         return this.userRepository.createUser(user);
     }
 
-    async updateUser(id: string, user: UserDTO): Promise<User> {
+    async updateUser(id: string, user: Partial<UserDTO>): Promise<User> {
         return this.userRepository.updateUser(id, user);
     }
 }

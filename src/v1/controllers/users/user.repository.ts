@@ -26,7 +26,7 @@ export class UserRepository extends Repository<User> {
         }
     }
 
-    async updateUser(id: string, user: UserDTO): Promise<User> {
+    async updateUser(id: string, user: Partial<UserDTO>): Promise<User> {
         const currentUser = await this.findOne(id);
         const userUpdated = { ...classToPlain(currentUser), ...user };
         const userp = new User();
