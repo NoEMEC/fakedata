@@ -4,10 +4,20 @@
 
 type Mutation {
   createUser(createUserInput: UserDTO!): User!
+  updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  getUser(id: String!): User!
   users: [User!]!
+}
+
+input UpdateUserInput {
+  age: Float
+  birthdate: String
+  firstname: String
+  gender: String
+  lastname: String
 }
 
 type User {
