@@ -14,18 +14,18 @@ import { User } from './user.entity';
 export class UserController {
     constructor(private userService: UserService) {}
 
-  @Get()
-  getAllUsers(): Promise<User[]> {
-    return this.userService.getUsers();
-  }
+    @Get()
+    getAllUsers(): Promise<User[]> {
+        return this.userService.getUsers();
+    }
 
-  @Get(':id')
-  getUser(@Param('id') id: string): Promise<User> {
-    return this.userService.getUser(id);
-  }
+    @Get(':id')
+    getUser(@Param('id') id: string): Promise<User> {
+        return this.userService.getUser(id);
+    }
 
-  @Post()
-  createUser(@Body(ValidationPipe) user: UserDTO): Promise<User> {
-    return this.userService.createUser(user);
-  }
+    @Post()
+    createUser(@Body(ValidationPipe) user: UserDTO): Promise<User> {
+        return this.userService.createUser(user);
+    }
 }
