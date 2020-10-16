@@ -9,5 +9,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     entities: [__dirname + '/../**/**.entity{.js,.ts}'],
     useNewUrlParser: true,
     logging: true,
+    useUnifiedTopology: true,
     synchronize: dbConfig.synchronize,
 };
