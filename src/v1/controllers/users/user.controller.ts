@@ -6,6 +6,8 @@ import {
     Param,
     ValidationPipe,
     Patch,
+    Delete,
+    HttpCode,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDTO } from 'src/v1/controllers/users/dto/user.dto';
@@ -33,5 +35,11 @@ export class UserController {
     @Patch(':id')
     updateUser(@Param('id') id: string, @Body('user') user: Partial<UserDTO>) {
         return this.userService.updateUser(id, user);
+    }
+
+    @Delete(':id')
+    @HttpCode(204)
+    deleteUser(@Param('id') id: string): Promise<string> {
+        return this.userService.deleteUser(id);
     }
 }
