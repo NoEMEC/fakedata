@@ -94,9 +94,8 @@ describe('PostService', () => {
     describe('createPosts', () => {
         it('should return a new post', async done => {
             const post = await service.createPost(testPost);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { _id, ...postWithoutId } = post;
-            expect(postWithoutId).toEqual(testPost);
+            delete post._id;
+            expect(post).toEqual(testPost);
             expect(post instanceof PostEntity).toBe(true);
             done();
         });
