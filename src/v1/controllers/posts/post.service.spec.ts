@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { getConnectionToken, TypeOrmModule } from '@nestjs/typeorm';
 import { PostService } from './post.service';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { PostRepository } from './post.repository';
 import { PostEntity } from './post.entity';
 import { ObjectId } from 'mongodb';
+import { Connection } from 'typeorm';
 
 const mongoMemory = new MongoMemoryServer();
+let connection: Connection;
 
 const testPost = {
     title: 'Test title',
@@ -67,33 +69,39 @@ describe('PostService', () => {
         }).compile();
 
         service = testModule.get<PostService>(PostService);
+        connection = testModule.get(getConnectionToken());
     });
-
-    afterAll(async () => {
+    
+    afterAll(async (done) => {
+        connection.close();
         await mongoMemory.stop();
+        done();
     });
 
-    it('should service be defined', () => {
+    it('should service be defined', (done) => {
         expect(service).toBeDefined();
+        done();
     });
 
     describe('getPosts', () => {
-        it('should be an array', async () => {
+        it('should be an array', async (done) => {
             const posts = await service.getPosts();
             expect(posts instanceof Array).toBe(true);
+            done();
         });
     });
 
     describe('createPosts', () => {
-        it('should return a new post', async () => {
+        it('should return a new post', async (done) => {
             const post = await service.createPost(testPost);
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { _id, ...postWithoutId } = post;
             expect(postWithoutId).toEqual(testPost);
             expect(post instanceof PostEntity).toBe(true);
+            done();
         });
 
-        it('should create each post', async () => {
+        it('should create each post', async (done) => {
             for await (let post of testPosts) {
                 post = await service.createPost(post);
             }
@@ -104,21 +112,24 @@ describe('PostService', () => {
                 posts[Math.floor(Math.random() * (posts.length - 1))]._id;
 
             expect(posts.length).toEqual(6);
+            done();
         });
     });
 
     describe('getPost', () => {
-        it('should obtain a post by id', async () => {
+        it('should obtain a post by id', async (done) => {
             const post = await service.getPost(randomId);
             expect(post).not.toBe(undefined);
             expect(post instanceof PostEntity).toBe(true);
+            done();
         });
 
-        it('should return error when id not exist', async () => {
+        it('should return error when id not exist', async (done) => {
             const badId = new ObjectId().toHexString();
             await expect(service.getPost(badId)).rejects.toThrow(
                 `Post with ID "${badId}" not found`,
             );
+            done();
         });
     });
 });
