@@ -42,20 +42,20 @@ describe('PostsController & e2e', () => {
         connection = module.get(getConnectionToken());
         await app.init();
     });
-    
-    afterAll(async (done) => {
+
+    afterAll(async done => {
         connection.close();
         await mongoMemory.stop();
         app.close();
         done();
     });
 
-    it('should be defined', (done) => {
+    it('should be defined', done => {
         expect(true).toBe(true);
         done();
     });
 
-    it(`/GET posts`, async (done) => {
+    it(`/GET posts`, async done => {
         request(app.getHttpServer())
             .get('/')
             .expect(200)
@@ -65,7 +65,7 @@ describe('PostsController & e2e', () => {
             });
     });
 
-    it('/POST posts', async (done) => {
+    it('/POST posts', async done => {
         request(app.getHttpServer())
             .post('/')
             .send(testPost)
@@ -78,7 +78,7 @@ describe('PostsController & e2e', () => {
             });
     });
 
-    it(`/GET post`, async (done) => {
+    it(`/GET post`, async done => {
         request(app.getHttpServer())
             .get(`/${randomId}`)
             .expect(200)

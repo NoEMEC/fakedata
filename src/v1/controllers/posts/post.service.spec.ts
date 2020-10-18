@@ -71,20 +71,20 @@ describe('PostService', () => {
         service = testModule.get<PostService>(PostService);
         connection = testModule.get(getConnectionToken());
     });
-    
-    afterAll(async (done) => {
+
+    afterAll(async done => {
         connection.close();
         await mongoMemory.stop();
         done();
     });
 
-    it('should service be defined', (done) => {
+    it('should service be defined', done => {
         expect(service).toBeDefined();
         done();
     });
 
     describe('getPosts', () => {
-        it('should be an array', async (done) => {
+        it('should be an array', async done => {
             const posts = await service.getPosts();
             expect(posts instanceof Array).toBe(true);
             done();
@@ -92,7 +92,7 @@ describe('PostService', () => {
     });
 
     describe('createPosts', () => {
-        it('should return a new post', async (done) => {
+        it('should return a new post', async done => {
             const post = await service.createPost(testPost);
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { _id, ...postWithoutId } = post;
@@ -101,7 +101,7 @@ describe('PostService', () => {
             done();
         });
 
-        it('should create each post', async (done) => {
+        it('should create each post', async done => {
             for await (let post of testPosts) {
                 post = await service.createPost(post);
             }
@@ -117,14 +117,14 @@ describe('PostService', () => {
     });
 
     describe('getPost', () => {
-        it('should obtain a post by id', async (done) => {
+        it('should obtain a post by id', async done => {
             const post = await service.getPost(randomId);
             expect(post).not.toBe(undefined);
             expect(post instanceof PostEntity).toBe(true);
             done();
         });
 
-        it('should return error when id not exist', async (done) => {
+        it('should return error when id not exist', async done => {
             const badId = new ObjectId().toHexString();
             await expect(service.getPost(badId)).rejects.toThrow(
                 `Post with ID "${badId}" not found`,
