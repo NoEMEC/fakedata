@@ -6,6 +6,7 @@ import { PostRepository } from './post.repository';
 import { PostEntity } from './post.entity';
 import { ObjectId } from 'mongodb';
 import { Connection } from 'typeorm';
+import { seed } from '../../seeds/test.seed';
 
 const mongoMemory = new MongoMemoryServer();
 let connection: Connection;
@@ -16,41 +17,42 @@ const testPost = {
     userId: 'randomId',
 };
 
-const testPosts = [
-    {
-        title: 'Test title 1',
-        body: 'Test body 1',
-        userId: 'randomId',
-    },
-    {
-        title: 'Test title 2',
-        body: 'Test body 2',
-        userId: 'randomId',
-    },
-    {
-        title: 'Test title 3',
-        body: 'Test body 3',
-        userId: 'randomId',
-    },
-    {
-        title: 'Test title 4',
-        body: 'Test body 4',
-        userId: 'randomId',
-    },
-    {
-        title: 'Test title 5',
-        body: 'Test body 5',
-        userId: 'randomId',
-    },
-];
+// const testPosts = [
+//     {
+//         title: 'Test title 1',
+//         body: 'Test body 1',
+//         userId: 'randomId',
+//     },
+//     {
+//         title: 'Test title 2',
+//         body: 'Test body 2',
+//         userId: 'randomId',
+//     },
+//     {
+//         title: 'Test title 3',
+//         body: 'Test body 3',
+//         userId: 'randomId',
+//     },
+//     {
+//         title: 'Test title 4',
+//         body: 'Test body 4',
+//         userId: 'randomId',
+//     },
+//     {
+//         title: 'Test title 5',
+//         body: 'Test body 5',
+//         userId: 'randomId',
+//     },
+// ];
 
 let randomId;
 
 describe('PostService', () => {
     let service: PostService;
     let testModule: TestingModule;
+    let repository: PostRepository;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const url = await mongoMemory.getUri();
         testModule = await Test.createTestingModule({
             providers: [PostService],
@@ -69,7 +71,9 @@ describe('PostService', () => {
         }).compile();
 
         service = testModule.get<PostService>(PostService);
+        repository = testModule.get<PostRepository>(PostRepository);
         connection = testModule.get(getConnectionToken());
+        await seed(repository);
     });
 
     afterAll(async done => {
@@ -92,7 +96,7 @@ describe('PostService', () => {
     });
 
     describe('createPosts', () => {
-        it('should return a new post', async done => {
+        it('should return a simulate new create post', async done => {
             const post = await service.createPost(testPost);
             delete post._id;
             expect(post).toEqual(testPost);
@@ -100,22 +104,21 @@ describe('PostService', () => {
             done();
         });
 
-        it('should create each post', async done => {
-            for await (let post of testPosts) {
-                post = await service.createPost(post);
-            }
-
+        it('should not alter the length of database', async done => {
             const posts = await service.getPosts();
-
-            randomId =
-                posts[Math.floor(Math.random() * (posts.length - 1))]._id;
-
-            expect(posts.length).toEqual(6);
+            expect(posts.length).toEqual(5);
             done();
         });
     });
 
     describe('getPost', () => {
+        it('should obtain all posts', async done => {
+            const posts = await service.getPosts();
+            expect(posts).not.toBe(undefined);
+            randomId = posts[0]._id;
+            done();
+        });
+
         it('should obtain a post by id', async done => {
             const post = await service.getPost(randomId);
             expect(post).not.toBe(undefined);
