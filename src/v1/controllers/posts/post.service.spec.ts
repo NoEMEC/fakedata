@@ -17,34 +17,6 @@ const testPost = {
     userId: 'randomId',
 };
 
-// const testPosts = [
-//     {
-//         title: 'Test title 1',
-//         body: 'Test body 1',
-//         userId: 'randomId',
-//     },
-//     {
-//         title: 'Test title 2',
-//         body: 'Test body 2',
-//         userId: 'randomId',
-//     },
-//     {
-//         title: 'Test title 3',
-//         body: 'Test body 3',
-//         userId: 'randomId',
-//     },
-//     {
-//         title: 'Test title 4',
-//         body: 'Test body 4',
-//         userId: 'randomId',
-//     },
-//     {
-//         title: 'Test title 5',
-//         body: 'Test body 5',
-//         userId: 'randomId',
-//     },
-// ];
-
 let randomId;
 
 describe('PostService', () => {
