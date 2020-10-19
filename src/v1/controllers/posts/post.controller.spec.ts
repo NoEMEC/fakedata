@@ -50,11 +50,6 @@ describe('PostsController & e2e', () => {
         done();
     });
 
-    it('should be defined', done => {
-        expect(true).toBe(true);
-        done();
-    });
-
     it(`/GET posts`, async done => {
         request(app.getHttpServer())
             .get('/')
