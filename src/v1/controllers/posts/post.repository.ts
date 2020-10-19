@@ -12,7 +12,6 @@ export class PostRepository extends Repository<PostEntity> {
         postEntity.body = body;
         postEntity.userId = userId;
         try {
-            if (process.env.NODE_ENV === 'test') await postEntity.save();
             return postEntity;
         } catch (error) {
             throw new InternalServerErrorException();
