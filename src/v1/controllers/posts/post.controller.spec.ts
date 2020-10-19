@@ -7,6 +7,7 @@ import { PostRepository } from './post.repository';
 import request from 'supertest';
 import { PostEntity } from './post.entity';
 import { Connection } from 'typeorm';
+import { seed } from '../../seeds/test.seed';
 
 const mongoMemory: MongoMemoryServer = new MongoMemoryServer();
 let connection: Connection;
@@ -21,7 +22,8 @@ let randomId;
 
 describe('PostsController & e2e', () => {
     let app: INestApplication;
-    beforeEach(async () => {
+    let repository: PostRepository;
+    beforeAll(async () => {
         const url = await mongoMemory.getUri();
         const module: TestingModule = await Test.createTestingModule({
             imports: [
@@ -40,6 +42,8 @@ describe('PostsController & e2e', () => {
 
         app = module.createNestApplication();
         connection = module.get(getConnectionToken());
+        repository = module.get<PostRepository>(PostRepository);
+        await seed(repository);
         await app.init();
     });
 
@@ -55,7 +59,8 @@ describe('PostsController & e2e', () => {
             .get('/')
             .expect(200)
             .then(({ body }) => {
-                expect(body).toEqual([]);
+                expect(body instanceof Array).toBe(true);
+                expect(body.length).toEqual(5);
                 done();
             });
     });
@@ -65,10 +70,12 @@ describe('PostsController & e2e', () => {
             .post('/')
             .send(testPost)
             .expect(201)
-            .then(({ body }) => {
-                const { _id, ...postWithoutId } = body;
-                randomId = _id;
-                expect(postWithoutId).toEqual(testPost);
+            .then(async ({ body }) => {
+                delete body._id;
+                expect(body).toEqual(testPost);
+                const posts = await repository.find();
+                randomId = posts[0]._id;
+                expect(posts.length).toEqual(5);
                 done();
             });
     });
@@ -78,7 +85,8 @@ describe('PostsController & e2e', () => {
             .get(`/${randomId}`)
             .expect(200)
             .then(({ body }) => {
-                expect(body).toEqual({ ...testPost, _id: randomId });
+                expect(body).not.toBe(undefined);
+                expect(body instanceof Object).toBe(true);
                 done();
             });
     });
