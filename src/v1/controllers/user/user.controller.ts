@@ -8,18 +8,26 @@ import {
     Patch,
     Delete,
     HttpCode,
+    Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDTO } from './dto/user.dto';
 import { User } from './user.entity';
+import { Pagination, PaginationOptionsInterface } from 'src/paginate';
 
 @Controller()
 export class UserController {
     constructor(private userService: UserService) {}
 
     @Get()
-    getAllUsers(): Promise<User[]> {
-        return this.userService.getUsers();
+    getAllUsers(
+        @Query() options: PaginationOptionsInterface,
+    ): Promise<Pagination<User>> {
+        const optionsPaginate: PaginationOptionsInterface = {
+            page: Number(options.page) || 1,
+            limit: Number(options.limit) || 10,
+        };
+        return this.userService.getUsers(optionsPaginate);
     }
 
     @Get(':id')
