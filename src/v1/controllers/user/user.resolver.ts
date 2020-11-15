@@ -3,13 +3,14 @@ import { User } from './user.entity';
 import { UserService } from './user.service';
 import { UserDTO } from './dto/user.dto';
 import { UpdateUserInput } from './input/user-update.input';
+import { Pagination } from 'src/paginate';
 
 @Resolver(() => User)
 export class UserResolver {
     constructor(private userService: UserService) {}
 
     @Query(() => [User], { description: 'Get all users' })
-    async users(): Promise<User[]> {
+    async users(): Promise<Pagination<User>> {
         return this.userService.getUsers();
     }
 
