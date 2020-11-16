@@ -1,12 +1,20 @@
 import { PaginationResultInterface } from './pagination.results.interface';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class Pagination<PaginationEntity> {
+    @ApiProperty()
     public results: PaginationEntity[];
+    @ApiProperty()
     public pageTotalDocuments: number;
+    @ApiProperty()
     public totalDocuments: number;
+    @ApiProperty()
     public page: number;
+    @ApiProperty()
     public totalPages: number;
+    @ApiProperty({ type: Number })
     public next: number | boolean;
+    @ApiProperty({ type: Number })
     public previous: number | boolean;
 
     constructor(
