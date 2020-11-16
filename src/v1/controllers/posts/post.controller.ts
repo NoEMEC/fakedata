@@ -9,7 +9,7 @@ import {
     ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Pagination } from 'src/paginate';
+import { Pagination } from './../../../paginate';
 import { PostDTO } from './dto/post.dto';
 import { PostEntity } from './post.entity';
 import { PostService } from './post.service';
