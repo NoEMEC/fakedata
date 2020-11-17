@@ -10,7 +10,7 @@ async function bootstrap() {
     const options = new DocumentBuilder()
         .setTitle('FakeData API')
         .setDescription(
-            'RestFul And GraphQL API fake data for test your FrontEnd Aplications Easy',
+            'RestFul API documentation',
         )
         .setVersion('1.0')
         .build();
