@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { User } from './user.entity';
 import { UserDTO } from './dto/user.dto';
-import { Pagination, PaginationOptionsInterface } from '../../../paginate';
+import { Pagination, PaginationOptionsDTO } from '../../../paginate';
 
 @Injectable()
 export class UserService {
@@ -12,9 +12,7 @@ export class UserService {
         private userRepository: UserRepository,
     ) {}
 
-    async getUsers(
-        options?: PaginationOptionsInterface,
-    ): Promise<Pagination<User>> {
+    async getUsers(options?: PaginationOptionsDTO): Promise<Pagination<User>> {
         const { limit, page } = options;
         const [results, total] = await this.userRepository.findAndCount({
             take: limit,
